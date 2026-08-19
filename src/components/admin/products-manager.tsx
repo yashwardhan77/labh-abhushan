@@ -578,13 +578,16 @@ export default function ProductsManager({
                       <ImageIcon className="w-5 h-5" />
                     </div>
                   )}
-                  <input
-                    ref={primaryFileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handlePrimaryFile}
-                    className="text-xs text-gray-500 file:mr-4 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-gold-50 file:text-gold-700 hover:file:bg-gold-100 cursor-pointer"
-                  />
+                  <div className="flex flex-col gap-1">
+                    <input
+                      ref={primaryFileInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handlePrimaryFile}
+                      className="text-xs text-gray-500 file:mr-4 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-gold-50 file:text-gold-700 hover:file:bg-gold-100 cursor-pointer"
+                    />
+                    <p className="text-[10px] text-gray-400">JPG, PNG, WebP up to 5MB &mdash; Recommended ratio: <strong>1:1</strong> (square, e.g. 800×800 px)</p>
+                  </div>
                 </div>
               </div>
 
@@ -623,14 +626,17 @@ export default function ProductsManager({
                       ))}
                     </div>
                   )}
-                  <input
-                    ref={secondaryFileInputRef}
-                    type="file"
-                    multiple
-                    accept="image/*"
-                    onChange={handleSecondaryFiles}
-                    className="text-xs text-gray-500 file:mr-4 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-gold-50 file:text-gold-700 hover:file:bg-gold-100 cursor-pointer"
-                  />
+                  <div className="flex flex-col gap-1">
+                    <input
+                      ref={secondaryFileInputRef}
+                      type="file"
+                      multiple
+                      accept="image/*"
+                      onChange={handleSecondaryFiles}
+                      className="text-xs text-gray-500 file:mr-4 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-gold-50 file:text-gold-700 hover:file:bg-gold-100 cursor-pointer"
+                    />
+                    <p className="text-[10px] text-gray-400">JPG, PNG, WebP up to 5MB &mdash; Recommended ratio: <strong>1:1</strong> (square, up to 3 extra images)</p>
+                  </div>
                 </div>
               </div>
 
