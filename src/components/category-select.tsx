@@ -14,7 +14,7 @@ export default function CategorySelect({
   search,
 }: CategorySelectProps) {
   return (
-    <div className="relative flex-grow sm:flex-grow-0">
+    <div className="relative w-full sm:w-auto flex-grow sm:flex-grow-0">
       <select
         name="categoryId"
         defaultValue={initialCategoryId || 'all'}
@@ -24,7 +24,7 @@ export default function CategorySelect({
           const catParam = value !== 'all' ? `&categoryId=${value}` : ''
           window.location.href = `/products?page=1${querySearch}${catParam}`
         }}
-        className="w-full sm:w-48 text-xs py-2.5 pl-3 pr-8 rounded-lg border border-gold-500/20 bg-white text-gray-800 focus:outline-none focus:border-gold-500 appearance-none cursor-pointer font-medium"
+        className="w-full sm:w-48 text-xs py-2.5 pl-3 pr-8 rounded-xl border border-gold-500/20 bg-white text-gray-800 focus:outline-none focus:border-gold-500 appearance-none cursor-pointer font-medium min-h-[42px]"
       >
         <option value="all">All Categories</option>
         {categories.map((cat) => (
@@ -33,7 +33,7 @@ export default function CategorySelect({
           </option>
         ))}
       </select>
-      <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-500" />
+      <div className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-500" />
     </div>
   )
 }

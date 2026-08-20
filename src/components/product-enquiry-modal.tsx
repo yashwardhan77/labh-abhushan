@@ -70,25 +70,25 @@ export default function ProductEnquiryModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4">
       {/* Backdrop */}
       <div onClick={onClose} className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
 
       {/* Modal Card */}
-      <div className="bg-white rounded-2xl w-full max-w-lg overflow-hidden relative z-10 border border-gold-500/20 shadow-2xl animate-fade-in-up">
+      <div className="bg-white rounded-2xl w-full max-w-lg overflow-hidden relative z-10 border border-gold-500/20 shadow-2xl animate-fade-in-up flex flex-col max-h-[90dvh]">
         {/* Header */}
-        <div className="bg-emerald-950 text-white p-5 flex items-center justify-between border-b border-gold-500/20">
+        <div className="bg-emerald-950 text-white p-4 sm:p-5 flex items-center justify-between border-b border-gold-500/20 shrink-0">
           <div>
-            <h3 className="font-serif text-lg font-bold tracking-wide uppercase text-gold-400">
+            <h3 className="font-serif text-base sm:text-lg font-bold tracking-wide uppercase text-gold-400">
               Product Enquiry
             </h3>
-            <p className="text-[10px] text-gray-300 mt-0.5 font-light">
-              Send details to our showroom to request details & pricing
+            <p className="text-[10px] sm:text-xs text-gray-300 mt-0.5 font-light">
+              Send details to our showroom to request price & availability
             </p>
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white transition-colors cursor-pointer"
+            className="text-gray-400 hover:text-white p-1 rounded-lg transition-colors cursor-pointer"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
@@ -96,19 +96,17 @@ export default function ProductEnquiryModal({
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 flex flex-col gap-4 text-gray-900">
-          <div>
-            <p className="text-xs text-gray-500 mb-1">Inquiring for:</p>
-            <p className="text-sm font-serif font-bold text-emerald-950">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 flex flex-col gap-3.5 sm:gap-4 text-gray-900 overflow-y-auto">
+          <div className="bg-gold-50/20 p-3 rounded-xl border border-gold-500/10">
+            <p className="text-[11px] text-gray-500 mb-0.5">Inquiring for:</p>
+            <p className="text-xs sm:text-sm font-serif font-bold text-emerald-950">
               {productName} <span className="text-xs text-gold-600 font-sans">({purity}, {weight})</span>
             </p>
           </div>
 
-          <div className="h-px bg-gold-500/10 my-1" />
-
           {/* Name */}
           <div>
-            <label className="text-xs font-semibold text-gray-700 block mb-1.5" htmlFor="name">
+            <label className="text-xs font-semibold text-gray-700 block mb-1" htmlFor="name">
               Your Name *
             </label>
             <div className="relative">
@@ -120,14 +118,14 @@ export default function ProductEnquiryModal({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your full name"
-                className="w-full pl-10 pr-4 py-2 border border-gold-500/20 rounded-lg text-sm focus:outline-none focus:border-gold-500"
+                className="w-full pl-9 pr-3.5 py-2.5 border border-gold-500/20 rounded-xl text-base sm:text-sm focus:outline-none focus:border-gold-500 bg-gold-50/5 min-h-[44px]"
               />
             </div>
           </div>
 
           {/* Mobile */}
           <div>
-            <label className="text-xs font-semibold text-gray-700 block mb-1.5" htmlFor="mobile">
+            <label className="text-xs font-semibold text-gray-700 block mb-1" htmlFor="mobile">
               Mobile Number *
             </label>
             <div className="relative">
@@ -139,14 +137,14 @@ export default function ProductEnquiryModal({
                 value={mobile}
                 onChange={(e) => setMobile(e.target.value)}
                 placeholder="Enter 10-digit mobile number"
-                className="w-full pl-10 pr-4 py-2 border border-gold-500/20 rounded-lg text-sm focus:outline-none focus:border-gold-500"
+                className="w-full pl-9 pr-3.5 py-2.5 border border-gold-500/20 rounded-xl text-base sm:text-sm focus:outline-none focus:border-gold-500 bg-gold-50/5 min-h-[44px]"
               />
             </div>
           </div>
 
           {/* Email */}
           <div>
-            <label className="text-xs font-semibold text-gray-700 block mb-1.5" htmlFor="email">
+            <label className="text-xs font-semibold text-gray-700 block mb-1" htmlFor="email">
               Email Address (Optional)
             </label>
             <div className="relative">
@@ -157,14 +155,14 @@ export default function ProductEnquiryModal({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter email address"
-                className="w-full pl-10 pr-4 py-2 border border-gold-500/20 rounded-lg text-sm focus:outline-none focus:border-gold-500"
+                className="w-full pl-9 pr-3.5 py-2.5 border border-gold-500/20 rounded-xl text-base sm:text-sm focus:outline-none focus:border-gold-500 bg-gold-50/5 min-h-[44px]"
               />
             </div>
           </div>
 
           {/* Message */}
           <div>
-            <label className="text-xs font-semibold text-gray-700 block mb-1.5" htmlFor="message">
+            <label className="text-xs font-semibold text-gray-700 block mb-1" htmlFor="message">
               Message / Request Details *
             </label>
             <div className="relative">
@@ -175,24 +173,24 @@ export default function ProductEnquiryModal({
                 rows={3}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gold-500/20 rounded-lg text-sm focus:outline-none focus:border-gold-500 min-h-[80px]"
+                className="w-full pl-9 pr-3.5 py-2.5 border border-gold-500/20 rounded-xl text-base sm:text-sm focus:outline-none focus:border-gold-500 min-h-[80px] bg-gold-50/5"
               />
             </div>
           </div>
 
           {/* Actions */}
-          <div className="flex gap-3 justify-end mt-4">
+          <div className="flex gap-2.5 sm:gap-3 justify-end mt-2 pt-2 border-t border-gold-500/10">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 text-sm font-semibold hover:bg-gray-50 transition-colors cursor-pointer"
+              className="px-4 py-2.5 rounded-xl border border-gray-300 text-gray-600 text-xs sm:text-sm font-semibold hover:bg-gray-50 active:scale-[0.98] transition-colors cursor-pointer min-h-[42px]"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-2 rounded-lg gold-gradient text-emerald-950 font-bold text-sm flex items-center gap-1.5 hover:opacity-95 disabled:opacity-50 transition-opacity cursor-pointer shadow-md"
+              className="px-6 py-2.5 rounded-xl gold-gradient text-emerald-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 hover:opacity-95 active:scale-[0.98] disabled:opacity-50 transition-all cursor-pointer shadow-md min-h-[42px]"
             >
               {loading ? (
                 <>
@@ -215,12 +213,12 @@ export default function ProductEnquiryModal({
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     />
                   </svg>
-                  Submitting...
+                  <span>Submitting...</span>
                 </>
               ) : (
                 <>
                   <Send className="w-4 h-4" />
-                  Submit Request
+                  <span>Submit Request</span>
                 </>
               )}
             </button>

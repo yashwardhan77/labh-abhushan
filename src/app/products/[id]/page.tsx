@@ -56,21 +56,21 @@ export default async function ProductDetailsPage({ params }: Props) {
   const WHATSAPP_NUM = '+918449708851'
 
   return (
-    <div className="w-full pt-24 pb-16 bg-gold-50/20">
+    <div className="w-full pt-20 sm:pt-24 pb-12 sm:pb-16 bg-gold-50/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Navigation Breadcrumb */}
-        <div className="mb-6 flex items-center justify-between">
+        <div className="mb-4 sm:mb-6 flex flex-wrap items-center justify-between gap-2">
           <Link
             href="/products"
-            className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-gold-600 hover:text-gold-500 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-gold-600 hover:text-gold-500 transition-colors py-1"
           >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            Back to Collection
+            <ArrowLeft className="w-4 h-4" />
+            <span>Back to Collection</span>
           </Link>
           
-          <span className="text-xs text-gray-500 font-medium">
-            Collection / {product.categories?.name} / {product.product_name}
+          <span className="text-[11px] sm:text-xs text-gray-500 font-medium truncate max-w-full">
+            Collection / {product.categories?.name} / <strong className="text-gray-800">{product.product_name}</strong>
           </span>
         </div>
 
@@ -79,12 +79,12 @@ export default async function ProductDetailsPage({ params }: Props) {
 
         {/* Related Products Section */}
         {relatedProducts.length > 0 && (
-          <div className="mt-20">
+          <div className="mt-12 sm:mt-16 md:mt-20">
             <h2 className="text-xl sm:text-2xl font-serif text-emerald-950 font-bold uppercase tracking-wider mb-6 relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-gold-500">
               Related Ornaments
             </h2>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-6 sm:mt-8">
               {relatedProducts.map((p: any) => {
                 const productWaLink = `https://wa.me/${WHATSAPP_NUM}?text=Hi%20Labh%20Abhushan,%20I%20am%20interested%20in%20"${encodeURIComponent(
                   p.product_name
@@ -93,9 +93,9 @@ export default async function ProductDetailsPage({ params }: Props) {
                 return (
                   <div
                     key={p.id}
-                    className="group bg-white rounded-xl overflow-hidden border border-gold-500/10 hover:border-gold-500/30 transition-all duration-300 flex flex-col justify-between shadow-sm hover:shadow-md"
+                    className="group bg-white rounded-2xl overflow-hidden border border-gold-500/10 hover:border-gold-500/30 transition-all duration-300 flex flex-col justify-between shadow-sm hover:shadow-md"
                   >
-                    <Link href={`/products/${p.id}`} className="relative aspect-square overflow-hidden block">
+                    <Link href={`/products/${p.id}`} className="relative aspect-square overflow-hidden block bg-white">
                       <img
                         src={p.image_url || 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=600&auto=format&fit=crop'}
                         alt={p.product_name}
@@ -119,7 +119,7 @@ export default async function ProductDetailsPage({ params }: Props) {
                       <div className="flex gap-2 border-t border-gold-500/5 pt-3">
                         <Link
                           href={`/products/${p.id}`}
-                          className="flex-1 text-center py-1.5 rounded border border-gold-500 text-gold-600 text-[10px] font-semibold hover:bg-gold-500 hover:text-emerald-950 transition-colors cursor-pointer"
+                          className="flex-1 text-center py-2 rounded-lg border border-gold-500 text-gold-600 text-xs font-semibold hover:bg-gold-500 hover:text-emerald-950 active:scale-[0.98] transition-colors cursor-pointer min-h-[36px] flex items-center justify-center"
                         >
                           Details
                         </Link>
@@ -127,10 +127,10 @@ export default async function ProductDetailsPage({ params }: Props) {
                           href={productWaLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded gold-gradient text-emerald-950 text-[10px] font-bold hover:opacity-90 transition-opacity cursor-pointer"
+                          className="flex-1 flex items-center justify-center gap-1 py-2 rounded-lg gold-gradient text-emerald-950 text-xs font-bold hover:opacity-90 active:scale-[0.98] transition-opacity cursor-pointer min-h-[36px]"
                         >
-                          <MessageCircle className="w-3 h-3 fill-current" />
-                          Enquire
+                          <MessageCircle className="w-3.5 h-3.5 fill-current" />
+                          <span>Enquire</span>
                         </a>
                       </div>
                     </div>

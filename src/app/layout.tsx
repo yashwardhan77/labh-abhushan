@@ -1,9 +1,16 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Playfair_Display, Inter } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import { ToastProvider } from '@/components/ui/toast'
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#0b221e',
+}
 
 const playfair = Playfair_Display({
   subsets: ['latin'],

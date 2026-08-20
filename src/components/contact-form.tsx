@@ -67,7 +67,7 @@ export default function ContactForm() {
 
       {/* Name */}
       <div>
-        <label className="text-xs font-semibold text-gray-700 block mb-1.5" htmlFor="contact-name">
+        <label className="text-xs font-semibold text-gray-700 block mb-1" htmlFor="contact-name">
           Your Name *
         </label>
         <div className="relative">
@@ -79,14 +79,14 @@ export default function ContactForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Enter your full name"
-            className="w-full pl-11 pr-4 py-2.5 border border-gold-500/20 rounded-lg text-sm focus:outline-none focus:border-gold-500 bg-gold-50/5 text-gray-800"
+            className="w-full pl-11 pr-4 py-2.5 border border-gold-500/20 rounded-xl text-base sm:text-sm focus:outline-none focus:border-gold-500 bg-gold-50/5 text-gray-800 min-h-[44px]"
           />
         </div>
       </div>
 
       {/* Mobile */}
       <div>
-        <label className="text-xs font-semibold text-gray-700 block mb-1.5" htmlFor="contact-mobile">
+        <label className="text-xs font-semibold text-gray-700 block mb-1" htmlFor="contact-mobile">
           Mobile Number *
         </label>
         <div className="relative">
@@ -98,14 +98,14 @@ export default function ContactForm() {
             value={mobile}
             onChange={(e) => setMobile(e.target.value)}
             placeholder="Enter 10-digit mobile number"
-            className="w-full pl-11 pr-4 py-2.5 border border-gold-500/20 rounded-lg text-sm focus:outline-none focus:border-gold-500 bg-gold-50/5 text-gray-800"
+            className="w-full pl-11 pr-4 py-2.5 border border-gold-500/20 rounded-xl text-base sm:text-sm focus:outline-none focus:border-gold-500 bg-gold-50/5 text-gray-800 min-h-[44px]"
           />
         </div>
       </div>
 
       {/* Email */}
       <div>
-        <label className="text-xs font-semibold text-gray-700 block mb-1.5" htmlFor="contact-email">
+        <label className="text-xs font-semibold text-gray-700 block mb-1" htmlFor="contact-email">
           Email Address (Optional)
         </label>
         <div className="relative">
@@ -116,14 +116,14 @@ export default function ContactForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email address"
-            className="w-full pl-11 pr-4 py-2.5 border border-gold-500/20 rounded-lg text-sm focus:outline-none focus:border-gold-500 bg-gold-50/5 text-gray-800"
+            className="w-full pl-11 pr-4 py-2.5 border border-gold-500/20 rounded-xl text-base sm:text-sm focus:outline-none focus:border-gold-500 bg-gold-50/5 text-gray-800 min-h-[44px]"
           />
         </div>
       </div>
 
       {/* Message */}
       <div>
-        <label className="text-xs font-semibold text-gray-700 block mb-1.5" htmlFor="contact-message">
+        <label className="text-xs font-semibold text-gray-700 block mb-1" htmlFor="contact-message">
           Message / Requirement Details *
         </label>
         <div className="relative">
@@ -135,7 +135,7 @@ export default function ContactForm() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Describe what you are looking for (e.g. customized 22K gold bangle designs, silver items availability)..."
-            className="w-full pl-11 pr-4 py-2.5 border border-gold-500/20 rounded-lg text-sm focus:outline-none focus:border-gold-500 min-h-[100px] bg-gold-50/5 text-gray-800"
+            className="w-full pl-11 pr-4 py-2.5 border border-gold-500/20 rounded-xl text-base sm:text-sm focus:outline-none focus:border-gold-500 min-h-[100px] bg-gold-50/5 text-gray-800"
           />
         </div>
       </div>
@@ -144,7 +144,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full py-3 rounded-lg gold-gradient text-emerald-950 font-bold text-sm uppercase tracking-wider flex items-center justify-center gap-2 hover:opacity-95 disabled:opacity-50 transition-opacity cursor-pointer shadow-md shadow-gold-500/10"
+        className="w-full py-3.5 rounded-xl gold-gradient text-emerald-950 font-bold text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 hover:opacity-95 active:scale-[0.98] disabled:opacity-50 transition-all cursor-pointer shadow-md shadow-gold-500/10 min-h-[48px]"
       >
         {loading ? (
           <>

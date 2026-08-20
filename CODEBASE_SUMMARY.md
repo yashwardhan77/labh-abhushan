@@ -1,4 +1,4 @@
-﻿# Codebase Summary: Labh Abhushan Jewellery Showroom
+# Codebase Summary: Labh Abhushan Jewellery Showroom
 
 This document is a complete technical reference for the **Labh Abhushan Showroom Web Application**. Keep this updated whenever major changes are made.
 
@@ -103,7 +103,7 @@ Run `schema.sql` in Supabase SQL Editor to create tables.
 
 ---
 
-## ⚙️ Configuration Changes Made
+## ⚙️ Configuration & Feature Changes Made
 
 | File | What Changed |
 |------|-------------|
@@ -111,9 +111,18 @@ Run `schema.sql` in Supabase SQL Editor to create tables.
 | `src/lib/supabase/client.ts` | Added placeholder fallback for missing env vars |
 | `src/lib/supabase/server.ts` | Added placeholder fallback for missing env vars |
 | `src/lib/supabase/middleware.ts` | Added placeholder fallback for missing env vars |
-| `src/app/page.tsx` | Updated Google Maps to Siwana showroom |
-| `src/app/contact/page.tsx` | Updated Google Maps to Siwana showroom |
-| `src/components/footer.tsx` | Added Instagram icon (inline SVG) |
+| `src/app/layout.tsx` | Added viewport metadata (`device-width`, `initialScale: 1`, `themeColor`) for mobile scaling |
+| `src/components/navbar.tsx` | Full mobile/tablet navigation with dynamic viewport height (`100dvh`), background contrast handling for subpages, and lock body scroll |
+| `src/components/hero-carousel.tsx` | Added **touch swipe gestures** (`onTouchStart`/`onTouchEnd`), fluid typography, and responsive height for mobile & iPads |
+| `src/app/page.tsx` | Responsive metal rates card, 2-column mobile/tablet product grids, responsive section padding, touch-friendly CTAs |
+| `src/app/products/page.tsx` | Mobile-friendly search & category filter layout, touch pagination, responsive ornament grid |
+| `src/components/product-details-client.tsx` | Touch-friendly action buttons, responsive metadata table, mobile gallery layout |
+| `src/components/product-enquiry-modal.tsx` | Mobile viewport height (`max-h-[90dvh]`), iOS zoom prevention, scrollable form body |
+| `src/components/contact-form.tsx` | Mobile touch input sizes and responsive styling |
+| `src/app/about/page.tsx` | Responsive statistics grid (2x2 on mobile, 4x1 on desktop) & card scaling |
+| `src/app/contact/page.tsx` | Responsive map container and contact info list |
+| `src/components/admin-sidebar.tsx` | Dynamic viewport height (`100dvh`), mobile header bar, touch backdrop & scroll lock |
+| `src/components/footer.tsx` | Added Instagram icon (inline SVG) + responsive 4-column grid with 44px touch targets |
 
 ---
 

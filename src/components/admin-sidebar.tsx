@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
@@ -34,6 +34,22 @@ export default function AdminSidebar() {
   const router = useRouter()
   const { toast } = useToast()
   const supabase = createClient()
+
+  // Close sidebar on pathname change and lock scroll on mobile open
+  useEffect(() => {
+    setIsOpen(false)
+  }, [pathname])
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isOpen])
 
   // Skip showing sidebar on non-admin pages or login page
   const isAdmin = pathname.startsWith('/admin')
@@ -69,7 +85,7 @@ export default function AdminSidebar() {
   return (
     <>
       {/* Mobile Top Bar */}
-      <div className="lg:hidden flex items-center justify-between bg-emerald-950 text-white px-4 py-3 fixed top-0 left-0 w-full z-40 border-b border-gold-500/20">
+      <div className="lg:hidden flex items-center justify-between bg-emerald-950 text-white px-4 py-3.5 fixed top-0 left-0 w-full z-40 border-b border-gold-500/20 shadow-md">
         <Link href="/admin/dashboard" className="flex flex-col">
           <span className="text-base font-serif tracking-wider text-gold-400 font-semibold uppercase">
             Labh Admin
@@ -80,18 +96,18 @@ export default function AdminSidebar() {
         </Link>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="text-gray-200 hover:text-gold-400 p-1 cursor-pointer"
+          className="text-gray-200 hover:text-gold-400 p-1.5 rounded-lg hover:bg-white/5 transition-colors cursor-pointer"
           aria-label="Toggle sidebar"
         >
-          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          {isOpen ? <X className="w-6 h-6 text-gold-400" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
       {/* Sidebar Container */}
       <aside
         className={cn(
-          'fixed top-[53px] lg:top-0 left-0 z-30 h-[calc(100vh-53px)] lg:h-screen w-64 bg-emerald-950 text-gray-200 border-r border-gold-500/10 flex flex-col justify-between py-6 transition-all duration-300 lg:translate-x-0',
-          isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+          'fixed top-[53px] lg:top-0 left-0 z-30 h-[calc(100dvh-53px)] lg:h-screen w-64 bg-emerald-950 text-gray-200 border-r border-gold-500/10 flex flex-col justify-between py-6 transition-all duration-300 ease-in-out lg:translate-x-0 overflow-y-auto',
+          isOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full lg:translate-x-0'
         )}
       >
         <div className="flex flex-col gap-8">
@@ -118,20 +134,20 @@ export default function AdminSidebar() {
                   href={item.href}
                   onClick={() => setIsOpen(false)}
                   className={cn(
-                    'flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium tracking-wide transition-all group',
+                    'flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium tracking-wide transition-all group',
                     isActive
-                      ? 'bg-gold-500/10 text-gold-400 border-l-4 border-gold-500 pl-3'
-                      : 'hover:bg-gold-500/5 hover:text-white'
+                      ? 'bg-gold-500/10 text-gold-400 border-l-4 border-gold-500 pl-3 font-semibold'
+                      : 'hover:bg-gold-500/5 hover:text-white text-gray-300'
                   )}
                 >
                   <div className="flex items-center gap-3">
                     <Icon
                       className={cn(
-                        'w-4 h-4 transition-colors',
+                        'w-4.5 h-4.5 transition-colors',
                         isActive ? 'text-gold-400' : 'text-gray-400 group-hover:text-gold-400'
                       )}
                     />
-                    {item.label}
+                    <span>{item.label}</span>
                   </div>
                   <ChevronRight
                     className={cn(
@@ -146,13 +162,20 @@ export default function AdminSidebar() {
         </div>
 
         {/* Footer Admin Actions */}
-        <div className="px-3">
+        <div className="px-3 pt-4 border-t border-gold-500/10 flex flex-col gap-2">
+          <Link
+            href="/"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-3 w-full px-4 py-2.5 rounded-xl text-xs font-medium tracking-wide text-gray-400 hover:text-gold-300 hover:bg-white/5 transition-all"
+          >
+            ← Back to Store Website
+          </Link>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 w-full px-4 py-3 rounded-lg text-sm font-medium tracking-wide text-red-300 hover:bg-red-950/30 hover:text-red-200 transition-all cursor-pointer border border-transparent hover:border-red-900/30"
+            className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-sm font-medium tracking-wide text-red-300 hover:bg-red-950/30 hover:text-red-200 transition-all cursor-pointer border border-transparent hover:border-red-900/30 min-h-[44px]"
           >
-            <LogOut className="w-4 h-4 shrink-0" />
-            Sign Out
+            <LogOut className="w-4.5 h-4.5 shrink-0" />
+            <span>Sign Out</span>
           </button>
         </div>
       </aside>
@@ -161,7 +184,7 @@ export default function AdminSidebar() {
       {isOpen && (
         <div
           onClick={() => setIsOpen(false)}
-          className="fixed inset-0 top-[53px] bg-black/40 backdrop-blur-sm z-20 lg:hidden"
+          className="fixed inset-0 top-[53px] bg-black/60 backdrop-blur-xs z-20 lg:hidden"
         />
       )}
     </>
