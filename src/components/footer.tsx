@@ -3,7 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react'
+import { MapPin, Phone, Mail, Clock, MessageCircle, Instagram } from 'lucide-react'
 
 export default function Footer() {
   const pathname = usePathname()
@@ -16,6 +16,7 @@ export default function Footer() {
   const PHONE_NUM = '8449708851'
   const EMAIL = 'info@labhabhushan.com'
   const WA_LINK = `https://wa.me/${WHATSAPP_NUM}?text=Hi%20Labh%20Abhushan,%20I%20am%20interested%20in%20your%20jewellery%20collection.`
+  const INSTAGRAM_LINK = 'https://www.instagram.com/_labh_abhushan?igsh=ODFvcm5qaGN4dGp3'
 
   return (
     <footer className="bg-emerald-950 text-gray-300 border-t border-gold-500/20">
@@ -51,6 +52,15 @@ export default function Footer() {
                 aria-label="Phone"
               >
                 <Phone className="w-5 h-5" />
+              </a>
+              <a
+                href={INSTAGRAM_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full border border-gold-500/20 bg-emerald-900/50 flex items-center justify-center text-gold-400 hover:bg-gold-500/10 hover:text-gold-300 transition-all cursor-pointer"
+                aria-label="Instagram"
+              >
+                <Instagram className="w-5 h-5" />
               </a>
             </div>
           </div>
