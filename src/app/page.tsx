@@ -38,7 +38,7 @@ export default async function HomePage() {
       <HeroCarousel banners={banners} />
 
       {/* 2. Live Metal Rates Bar */}
-      <section className="relative z-20 -mt-10 sm:-mt-14 md:-mt-16 max-w-5xl mx-auto w-full px-3.5 sm:px-6 lg:px-8 mb-10 sm:mb-16">
+      <section className="relative z-20 pt-8 sm:pt-12 pb-6 sm:pb-10 max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8">
         <div className="bg-emerald-950 text-white rounded-2xl border border-gold-500/30 p-4 sm:p-6 md:p-8 shadow-2xl relative overflow-hidden">
           {/* Decorative Gold Glow */}
           <div className="absolute -top-24 -left-24 w-48 h-48 rounded-full bg-gold-500/10 blur-3xl pointer-events-none" />
