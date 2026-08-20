@@ -25,13 +25,22 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
           {/* Brand Info */}
           <div className="flex flex-col gap-4">
-            <Link href="/" className="flex flex-col">
-              <span className="text-xl sm:text-2xl font-serif tracking-widest text-gold-400 font-semibold uppercase">
-                Labh Abhushan
-              </span>
-              <span className="text-[10px] tracking-[0.3em] text-gray-400 uppercase font-light -mt-1">
-                Purity & Trust
-              </span>
+            <Link href="/" className="flex items-center gap-3 group">
+              <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-gold-500/40 shadow-md shrink-0 bg-emerald-950">
+                <img
+                  src="/logo.png"
+                  alt="Labh Abhushan Logo"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-xl sm:text-2xl font-serif tracking-widest text-gold-400 font-semibold uppercase">
+                  Labh Abhushan
+                </span>
+                <span className="text-[9px] tracking-[0.3em] text-gray-400 uppercase font-light -mt-1">
+                  Purity & Trust
+                </span>
+              </div>
             </Link>
             <p className="text-xs sm:text-sm leading-relaxed text-gray-400 mt-1 sm:mt-2">
               Established with a legacy of providing high-quality, certified gold, silver, and diamond ornaments. We promise 100% purity and outstanding craftsmanship.

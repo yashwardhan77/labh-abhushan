@@ -76,14 +76,17 @@ export default function LoginPage() {
       <div className="w-full max-w-md bg-black/40 backdrop-blur-xl border border-gold-500/20 rounded-2xl p-8 shadow-2xl flex flex-col gap-6 animate-fade-in-up text-white">
         
         {/* Header */}
-        <div className="text-center">
-          <span className="text-gold-400 font-serif tracking-[0.2em] uppercase text-xs font-semibold block mb-1">
+        <div className="text-center flex flex-col items-center">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-gold-500/50 shadow-2xl shadow-gold-500/20 mb-3 bg-emerald-950">
+            <img src="/logo.png" alt="Labh Abhushan Logo" className="w-full h-full object-cover" />
+          </div>
+          <span className="text-gold-400 font-serif tracking-[0.2em] uppercase text-xs font-semibold block mb-0.5">
             Labh Abhushan
           </span>
-          <h1 className="text-2xl font-serif font-bold uppercase tracking-wider text-white">
+          <h1 className="text-xl sm:text-2xl font-serif font-bold uppercase tracking-wider text-white">
             Staff Portal
           </h1>
-          <div className="h-0.5 w-16 gold-gradient mx-auto mt-3" />
+          <div className="h-0.5 w-16 gold-gradient mx-auto mt-2" />
         </div>
 
         {/* Demo Mode Alert */}

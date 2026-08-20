@@ -85,14 +85,19 @@ export default function AdminSidebar() {
   return (
     <>
       {/* Mobile Top Bar */}
-      <div className="lg:hidden flex items-center justify-between bg-emerald-950 text-white px-4 py-3.5 fixed top-0 left-0 w-full z-40 border-b border-gold-500/20 shadow-md">
-        <Link href="/admin/dashboard" className="flex flex-col">
-          <span className="text-base font-serif tracking-wider text-gold-400 font-semibold uppercase">
-            Labh Admin
-          </span>
-          <span className="text-[8px] tracking-[0.2em] text-gray-400 uppercase">
-            Showroom Control
-          </span>
+      <div className="lg:hidden flex items-center justify-between bg-emerald-950 text-white px-4 py-3 fixed top-0 left-0 w-full z-40 border-b border-gold-500/20 shadow-md">
+        <Link href="/admin/dashboard" className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-full overflow-hidden border border-gold-500/40 shrink-0 bg-emerald-950">
+            <img src="/logo.png" alt="Logo" className="w-full h-full object-cover" />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-sm font-serif tracking-wider text-gold-400 font-semibold uppercase">
+              Labh Admin
+            </span>
+            <span className="text-[7px] tracking-[0.2em] text-gray-400 uppercase -mt-0.5">
+              Showroom Control
+            </span>
+          </div>
         </Link>
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -113,13 +118,18 @@ export default function AdminSidebar() {
         <div className="flex flex-col gap-8">
           {/* Brand header for desktop */}
           <div className="hidden lg:flex flex-col px-6">
-            <Link href="/" className="flex flex-col">
-              <span className="text-xl font-serif tracking-widest text-gold-400 font-semibold uppercase">
-                Labh Abhushan
-              </span>
-              <span className="text-[10px] tracking-[0.3em] text-gold-500/75 uppercase font-light -mt-1">
-                Admin Panel
-              </span>
+            <Link href="/" className="flex items-center gap-3 group">
+              <div className="w-10 h-10 rounded-full overflow-hidden border border-gold-500/40 shrink-0 bg-emerald-950 shadow-sm">
+                <img src="/logo.png" alt="Logo" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-lg font-serif tracking-widest text-gold-400 font-semibold uppercase">
+                  Labh Abhushan
+                </span>
+                <span className="text-[9px] tracking-[0.25em] text-gold-500/75 uppercase font-light -mt-1">
+                  Admin Panel
+                </span>
+              </div>
             </Link>
           </div>
 

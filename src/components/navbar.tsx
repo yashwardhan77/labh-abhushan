@@ -72,13 +72,22 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo / Branding */}
-          <Link href="/" className="flex flex-col group py-1">
-            <span className="text-xl sm:text-2xl font-serif tracking-widest text-gold-400 group-hover:text-gold-300 transition-colors uppercase font-semibold">
-              Labh Abhushan
-            </span>
-            <span className="text-[9px] sm:text-[10px] tracking-[0.3em] text-gray-300 uppercase font-light -mt-1 group-hover:text-gold-200/80 transition-colors">
-              Purity & Trust
-            </span>
+          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group py-1">
+            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden border border-gold-500/40 shadow-sm shrink-0 bg-emerald-950">
+              <img
+                src="/logo.png"
+                alt="Labh Abhushan Logo"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-lg sm:text-xl font-serif tracking-widest text-gold-400 group-hover:text-gold-300 transition-colors uppercase font-semibold">
+                Labh Abhushan
+              </span>
+              <span className="text-[8px] sm:text-[9px] tracking-[0.25em] text-gray-300 uppercase font-light -mt-1 group-hover:text-gold-200/80 transition-colors">
+                Purity & Trust
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}

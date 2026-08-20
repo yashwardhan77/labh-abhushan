@@ -25,15 +25,21 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://labhabhushan.vercel.app'),
   title: 'Labh Abhushan | 100% Hallmarked Gold, Silver & Diamonds',
   description: 'Welcome to Labh Abhushan. Discover premium, certified gold ornaments, silver utensils, and luxury diamonds. Legacy of trust, purity, and unmatched craftsmanship.',
   keywords: 'jewellery, gold, silver, diamonds, ornaments, showroom, Labh Abhushan, certified gold, bridal jewellery',
   authors: [{ name: 'Labh Abhushan' }],
+  icons: {
+    icon: '/logo.png',
+    apple: '/logo.png',
+  },
   openGraph: {
     title: 'Labh Abhushan | Purity & Trust',
     description: 'Certified gold, silver, and diamond ornaments showing exceptional craftsmanship.',
     type: 'website',
     locale: 'en_IN',
+    images: [{ url: '/logo.png', width: 600, height: 600, alt: 'Labh Abhushan Logo' }],
   },
 }
 
