@@ -422,7 +422,7 @@ export default async function HomePage() {
             <div className="h-96 sm:h-[450px] w-full rounded-2xl overflow-hidden border-2 border-gold-500/20 shadow-2xl relative">
               <iframe
                 title="Labh Abhushan Store Location Map"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m13!1d3770.7968593467657!2d72.8335!3d18.975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7ce307e5f1b1b%3A0x7d6a5d409e51b1b!2sZaveri%20Bazaar%2C%20Kalbadevi%2C%20Mumbai%2C%20Maharashtra%20400002!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                src="https://maps.google.com/maps?q=Labh%20abhushan%20pvt%20Ltd,%20Siwana,%20Rajasthan&t=&z=17&ie=UTF8&iwloc=&output=embed"
                 className="absolute inset-0 w-full h-full border-none"
                 allowFullScreen={false}
                 loading="lazy"

@@ -139,7 +139,7 @@ export default function ContactPage() {
       <section className="relative w-full h-[450px] border-t border-gold-500/10">
         <iframe
           title="Labh Abhushan Store Location Map"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m12d3770.7968593467657!2d72.8335!3d18.975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7ce307e5f1b1b%3A0x7d6a5d409e51b1b!2sZaveri%20Bazaar%2C%20Kalbadevi%2C%20Mumbai%2C%20Maharashtra%20400002!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+          src="https://maps.google.com/maps?q=Labh%20abhushan%20pvt%20Ltd,%20Siwana,%20Rajasthan&t=&z=17&ie=UTF8&iwloc=&output=embed"
           className="absolute inset-0 w-full h-full border-none"
           allowFullScreen={false}
           loading="lazy"
