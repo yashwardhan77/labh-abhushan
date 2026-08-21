@@ -1,49 +1,41 @@
 import { NextResponse } from 'next/server'
 
-// Server-side API route — fetches gold/silver prices server-to-server
-// This bypasses CORS/403 restrictions that browser requests face
+// Fetches live gold & silver spot prices from Yahoo Finance (free, no API key needed)
+// GC=F = Gold Futures, SI=F = Silver Futures, USDINR=X = USD to INR rate
+
+async function fetchYahooPrice(symbol: string): Promise<number> {
+  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d&range=1d`
+  const res = await fetch(url, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36',
+      'Accept': 'application/json',
+    },
+    next: { revalidate: 300 }, // cache 5 minutes
+  })
+
+  if (!res.ok) throw new Error(`Yahoo Finance error for ${symbol}: ${res.status}`)
+
+  const data = await res.json()
+  const price = data?.chart?.result?.[0]?.meta?.regularMarketPrice
+  if (!price) throw new Error(`No price data for ${symbol}`)
+  return price
+}
+
 export async function GET() {
   try {
-    // Try goldprice.org first (server-side request bypasses CORS block)
-    const [spotRes, fxRes] = await Promise.all([
-      fetch('https://data-asg.goldprice.org/dbXRates/USD', {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-          'Accept': 'application/json',
-          'Referer': 'https://goldprice.org/',
-        },
-        next: { revalidate: 300 }, // cache for 5 minutes
-      }),
-      fetch('https://open.er-api.com/v6/latest/USD', {
-        next: { revalidate: 3600 }, // cache exchange rate for 1 hour
-      }),
+    // Fetch gold (USD/oz), silver (USD/oz), and USD→INR rate in parallel
+    const [goldUsdPerOz, silverUsdPerOz, usdToInr] = await Promise.all([
+      fetchYahooPrice('GC=F'),    // Gold Futures in USD per troy oz
+      fetchYahooPrice('SI=F'),    // Silver Futures in USD per troy oz
+      fetchYahooPrice('USDINR=X'), // USD to INR exchange rate
     ])
 
-    if (!spotRes.ok) {
-      throw new Error(`goldprice.org returned ${spotRes.status}`)
-    }
-
-    const spotData = await spotRes.json()
-    const fxData = await fxRes.json()
-
-    // USD → INR exchange rate (fallback to 83.5 if API fails)
-    const usdToInr: number = fxData?.rates?.INR ?? 83.5
-
-    // goldprice.org returns price per troy oz in USD
     // 1 troy oz = 31.1035 grams
-    const goldUsdPerOz: number = spotData?.xauPrice ?? 0
-    const silverUsdPerOz: number = spotData?.xagPrice ?? 0
-
-    if (!goldUsdPerOz || !silverUsdPerOz) {
-      throw new Error('Spot price data missing from goldprice.org response')
-    }
-
-    // Gold: USD/oz → INR/gram → INR per 10g
     const goldInrPerGram = (goldUsdPerOz / 31.1035) * usdToInr
-    const goldPer10g = Math.round(goldInrPerGram * 10)
-
-    // Silver: USD/oz → INR/gram → INR per kg
     const silverInrPerGram = (silverUsdPerOz / 31.1035) * usdToInr
+
+    // Indian jewellery standard: Gold per 10g, Silver per kg
+    const goldPer10g = Math.round(goldInrPerGram * 10)
     const silverPerKg = Math.round(silverInrPerGram * 1000)
 
     return NextResponse.json({
@@ -51,58 +43,62 @@ export async function GET() {
       gold_per_10g: goldPer10g,
       silver_per_kg: silverPerKg,
       usd_to_inr: Math.round(usdToInr * 100) / 100,
-      gold_usd_per_oz: goldUsdPerOz,
-      silver_usd_per_oz: silverUsdPerOz,
-      source: 'goldprice.org',
+      gold_usd_per_oz: Math.round(goldUsdPerOz * 100) / 100,
+      silver_usd_per_oz: Math.round(silverUsdPerOz * 100) / 100,
+      source: 'Yahoo Finance (GC=F, SI=F, USDINR=X)',
       fetched_at: new Date().toISOString(),
     })
   } catch (err: any) {
-    // Fallback: try metals.live (completely free, no key needed)
+    console.error('market-rates API error:', err.message)
+
+    // Fallback: try alternate Yahoo Finance endpoint
     try {
-      const fallbackRes = await fetch('https://metals.live/api/spot', {
-        headers: { 'Accept': 'application/json' },
+      const [goldRes, inrRes] = await Promise.all([
+        fetch('https://query2.finance.yahoo.com/v8/finance/chart/GC=F?interval=1d&range=1d', {
+          headers: { 'User-Agent': 'Mozilla/5.0' },
+          next: { revalidate: 300 },
+        }),
+        fetch('https://query2.finance.yahoo.com/v8/finance/chart/USDINR=X?interval=1d&range=1d', {
+          headers: { 'User-Agent': 'Mozilla/5.0' },
+          next: { revalidate: 3600 },
+        }),
+      ])
+
+      const silverRes2 = await fetch('https://query2.finance.yahoo.com/v8/finance/chart/SI=F?interval=1d&range=1d', {
+        headers: { 'User-Agent': 'Mozilla/5.0' },
         next: { revalidate: 300 },
       })
 
-      if (fallbackRes.ok) {
-        const fallbackData = await fallbackRes.json()
-        // metals.live returns array: [{metal: 'gold', price: ...}, ...]
-        const goldEntry = Array.isArray(fallbackData)
-          ? fallbackData.find((m: any) => m.metal === 'gold')
-          : null
-        const silverEntry = Array.isArray(fallbackData)
-          ? fallbackData.find((m: any) => m.metal === 'silver')
-          : null
+      if (goldRes.ok && inrRes.ok && silverRes2.ok) {
+        const [goldData, inrData, silverData] = await Promise.all([
+          goldRes.json(),
+          inrRes.json(),
+          silverRes2.json(),
+        ])
 
-        // Fetch exchange rate separately
-        const fxRes2 = await fetch('https://open.er-api.com/v6/latest/USD', {
-          next: { revalidate: 3600 },
-        })
-        const fxData2 = await fxRes2.json()
-        const usdToInr2: number = fxData2?.rates?.INR ?? 83.5
+        const goldUsd = goldData?.chart?.result?.[0]?.meta?.regularMarketPrice
+        const silverUsd = silverData?.chart?.result?.[0]?.meta?.regularMarketPrice
+        const inrRate = inrData?.chart?.result?.[0]?.meta?.regularMarketPrice
 
-        if (goldEntry && silverEntry) {
-          const goldPer10g = Math.round((goldEntry.price / 31.1035) * usdToInr2 * 10)
-          const silverPerKg = Math.round((silverEntry.price / 31.1035) * usdToInr2 * 1000)
-
+        if (goldUsd && silverUsd && inrRate) {
           return NextResponse.json({
             success: true,
-            gold_per_10g: goldPer10g,
-            silver_per_kg: silverPerKg,
-            usd_to_inr: Math.round(usdToInr2 * 100) / 100,
-            source: 'metals.live',
+            gold_per_10g: Math.round((goldUsd / 31.1035) * inrRate * 10),
+            silver_per_kg: Math.round((silverUsd / 31.1035) * inrRate * 1000),
+            usd_to_inr: Math.round(inrRate * 100) / 100,
+            source: 'Yahoo Finance query2 (fallback)',
             fetched_at: new Date().toISOString(),
           })
         }
       }
-    } catch (_err) {
-      // both sources failed — fall through to error response
+    } catch (fallbackErr: any) {
+      console.error('Fallback also failed:', fallbackErr.message)
     }
 
     return NextResponse.json(
       {
         success: false,
-        error: err.message || 'All market data sources unavailable. Please enter rates manually.',
+        error: 'Market data temporarily unavailable. Please enter rates manually or check MCX India.',
       },
       { status: 503 }
     )
