@@ -22,43 +22,20 @@ interface MarketRate {
   error: string | null
 }
 
-// Fetches today's gold & silver reference price using goldprice.org public widget data
+// Calls our own Next.js server-side proxy route which fetches from goldprice.org
+// Server-to-server requests bypass CORS/403 restrictions
 async function fetchMarketRates(): Promise<{ gold_per_10g: number; silver_per_kg: number }> {
-  // goldprice.org provides free public JSON endpoint for current spot prices
-  // XAU = Gold, XAG = Silver (troy oz in USD)
-  const [spotRes, fxRes] = await Promise.all([
-    fetch('https://data-asg.goldprice.org/dbXRates/USD', { cache: 'no-store' }),
-    fetch('https://open.er-api.com/v6/latest/USD', { cache: 'no-store' }),
-  ])
+  const res = await fetch('/api/market-rates', { cache: 'no-store' })
+  const data = await res.json()
 
-  if (!spotRes.ok || !fxRes.ok) {
-    throw new Error('Could not fetch market data. Please check manually.')
+  if (!res.ok || !data.success) {
+    throw new Error(data.error || 'Could not fetch market data. Please check rates manually.')
   }
 
-  const spotData = await spotRes.json()
-  const fxData = await fxRes.json()
-
-  // USD to INR exchange rate
-  const usdToInr: number = fxData?.rates?.INR ?? 83.5
-
-  // goldprice.org returns price per troy oz in USD
-  // 1 troy oz = 31.1035 grams
-  const goldUsdPerOz: number = spotData?.xauPrice ?? 0
-  const silverUsdPerOz: number = spotData?.xagPrice ?? 0
-
-  if (!goldUsdPerOz || !silverUsdPerOz) {
-    throw new Error('Market data unavailable. Please enter rates manually.')
+  return {
+    gold_per_10g: data.gold_per_10g,
+    silver_per_kg: data.silver_per_kg,
   }
-
-  // Convert to INR per gram
-  const goldInrPerGram = (goldUsdPerOz / 31.1035) * usdToInr
-  // Per 10g (like Indian jewellery market standard)
-  const goldPer10g = Math.round(goldInrPerGram * 10)
-  // Silver: per kg = per gram * 1000
-  const silverInrPerGram = (silverUsdPerOz / 31.1035) * usdToInr
-  const silverPerKg = Math.round(silverInrPerGram * 1000)
-
-  return { gold_per_10g: goldPer10g, silver_per_kg: silverPerKg }
 }
 
 export default function RatesForm({ initialRates }: RatesFormProps) {
